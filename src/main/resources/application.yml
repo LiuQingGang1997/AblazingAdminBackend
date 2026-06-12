@@ -1,0 +1,32 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: xinddongadmin-backend
+  datasource:
+    url: ${DB_URL:jdbc:mysql://ablazing.mysql.polardb.rds.aliyuncs.com:3306/ablazinghome?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai}
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME:ablazing}
+    password: ${DB_PASSWORD:Ablazing1}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-me-in-env-change-me-in-env-change-me}
+    expiresSeconds: ${JWT_EXPIRES_SECONDS:86400}
+
+aliyun:
+  oss:
+    endpoint: ${OSS_ENDPOINT:oss-cn-shanghai.aliyuncs.com}
+    accessKeyId: ${OSS_ACCESS_KEY_ID:}
+    accessKeySecret: ${OSS_ACCESS_KEY_SECRET:}
+    bucketName: ${OSS_BUCKET_NAME:ablazing}
