@@ -24,6 +24,10 @@ public class OssService {
     private String bucketName;
 
     public String uploadFile(MultipartFile file) throws Exception {
+        if (accessKeyId == null || accessKeyId.isEmpty() || accessKeySecret == null || accessKeySecret.isEmpty()) {
+            throw new RuntimeException("OSS 配置未完成，请设置 OSS_ACCESS_KEY_ID 和 OSS_ACCESS_KEY_SECRET 环境变量");
+        }
+        
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null) {
             originalFilename = "unknown";

@@ -26,6 +26,8 @@ public class SecurityConfig {
     http.authorizeHttpRequests(
         auth ->
             auth.requestMatchers("/api/health", "/api/auth/login", "/h2-console/**").permitAll()
+                // 放行文件上传接口
+                .requestMatchers(HttpMethod.POST, "/api/upload").permitAll()
                 // 放行官网前端需要的 GET 接口（允许匿名访问查询列表），注意需要精确匹配以及路径下的所有
                 .requestMatchers(HttpMethod.GET, "/api/banners", "/api/banners/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/cases", "/api/cases/**").permitAll()
@@ -38,6 +40,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/team-members", "/api/team-members/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/categories", "/api/categories/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/product-series", "/api/product-series/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/dynamic-news", "/api/dynamic-news/**").permitAll()
                 .anyRequest()
                 .authenticated());
 

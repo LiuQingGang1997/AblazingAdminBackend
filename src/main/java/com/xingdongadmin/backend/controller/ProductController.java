@@ -75,7 +75,20 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductView> getAllProducts() {
+    public List<ProductView> getAllProducts(
+            @RequestParam(required = false) Long brandId) {
+        if (brandId != null) {
+            List<Long> productIds = brandRelationRepo.findByBrandId(brandId).stream()
+                    .map(ProductBrandRelation::getProductId)
+                    .toList();
+            if (productIds.isEmpty()) {
+                return List.of();
+            }
+            return productRepository.findAllById(productIds).stream()
+                    .sorted(java.util.Comparator.comparing(Product::getSortOrder))
+                    .map(this::buildProductView)
+                    .toList();
+        }
         return productRepository.findAllByOrderBySortOrderAsc().stream()
                 .map(this::buildProductView)
                 .toList();
